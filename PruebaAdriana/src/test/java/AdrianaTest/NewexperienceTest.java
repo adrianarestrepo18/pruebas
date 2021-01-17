@@ -4,7 +4,7 @@ package AdrianaTest;
 
 import static org.junit.Assert.assertTrue;
 
-
+import java.util.concurrent.TimeUnit;
 
 import org.junit.After;
 import org.junit.Before;
@@ -13,6 +13,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 
 
@@ -49,13 +50,10 @@ public class NewexperienceTest {
 		driver.findElement(registerLinkLocator).click();
 		Thread.sleep(1000);
 		if(driver.findElement(registerLinkLocator).isDisplayed()) {
-			driver.findElement(EmailaddresLocator).sendKeys("pppp@hotmail.com");
+			driver.findElement(EmailaddresLocator).sendKeys("prueba999@hotmail.com");
 			driver.findElement(registerBtnLocator).click();
 			assertTrue(driver.findElement(homePageLocator).isDisplayed());
-			driver.findElement(passwdLocator).sendKeys("pas123");
 
-			
-	
 	}
 		else {
 			System.out.print("Register pages was not found");
@@ -95,7 +93,7 @@ public class NewexperienceTest {
 		Select selectyears = new Select(eleyears);
 		selectyears.selectByValue("1982");
 		
-		// Ingresamos dirección
+		 // Ingresamos dirección
 
 		  driver.findElement(By.id("firstname"));
 		  driver.findElement(By.id("lastname"));
@@ -106,7 +104,7 @@ public class NewexperienceTest {
 		  
 		  driver.findElement(By.name("postcode")).sendKeys("05897");
 		  
-		// Selecionamos Pais
+		 // Selecionamos Pais
 		  WebElement countrydropDown=driver.findElement(By.name("id_country"));
 		  Select oSelectC=new Select(countrydropDown);
 		  oSelectC.selectByVisibleText("United States");
@@ -131,6 +129,75 @@ public class NewexperienceTest {
 		  else {
 		   System.out.println("User Verification Failed,Test case Failed");
 		  }
+		  
+
+		  WebDriver driver=new ChromeDriver();
+		  String URL="http://automationpractice.com/index.php";
+		  
+		  // Open URL and Maximize browser window
+		  driver.get(URL);
+		  driver.manage().window().maximize();
+		  driver.manage().timeouts().implicitlyWait(3000, TimeUnit.MILLISECONDS);
+
+		  //Click on Sign in
+		  driver.findElement(By.linkText("Sign in")).click();
+		  //Login
+		  driver.findElement(By.id("email")).sendKeys("adrianarestrepo18@gmail.com");
+		  driver.findElement(By.id("passwd")).sendKeys("Adri3218");
+		  driver.findElement(By.id("SubmitLogin")).click();
+		  
+		  //Click on Women
+		  driver.findElement(By.linkText("WOMEN")).click();
+		  
+		  WebElement SecondImg=driver.findElement(By.xpath("/html/body/div[1]/div[2]/div/div[3]/div[2]/ul/li[2]/div/div[1]/div/a[1]/img"));
+		  WebElement MoreBtn=driver.findElement(By.xpath("/html/body[1]/div[1]/div[2]/div[1]/div[3]/div[2]/ul/li[2]/div[1]/div[2]/div[2]/a[2]"));
+		  Actions actions=new Actions(driver);
+		  actions.moveToElement(SecondImg).moveToElement(MoreBtn).click().perform();
+		  
+		  
+		 //Cambiar cantidad x 2
+		  driver.findElement(By.id("quantity_wanted")).clear();
+		  driver.findElement(By.id("quantity_wanted")).sendKeys("2");
+
+		  //Seleccionar la talla M
+		  WebElement Sizedrpdwn=driver.findElement(By.xpath("//*[@id='group_1']"));
+		  Select oSelect=new Select(Sizedrpdwn);
+		  oSelect.selectByVisibleText("M");
+
+		  //Seleccionar el Color
+		  driver.findElement(By.id("color_11")).click();
+
+		  //Click agregar al carrito
+		  driver.findElement(By.xpath("//p[@id='add_to_cart']//span[.='Add to cart']")).click();
+
+		  //Click para proceder
+		  driver.findElement(By.xpath("/html//div[@id='layer_cart']//a[@title='Proceed to checkout']/span")).click();
+		  
+		  //Checkout page Proceed
+		  driver.findElement(By.xpath("/html/body/div[1]/div[2]/div/div[3]/div/p[2]/a[1]/span")).click();
+		  driver.findElement(By.xpath("/html/body/div[1]/div[2]/div/div[3]/div/form/p/button/span")).click();
+		  
+		  //Agrega terminos y condiciones
+		  driver.findElement(By.xpath("//*[@id=\"cgv\"]")).click();
+		  driver.findElement(By.xpath("/html/body/div[1]/div[2]/div/div[3]/div/div/form/p/button/span")).click();
+
+		  //Click on Payby Check
+		  driver.findElement(By.xpath("/html/body/div[1]/div[2]/div/div[3]/div/div/div[3]/div[2]/div/p/a")).click();
+		  
+		  //Confirmar la order
+		  driver.findElement(By.xpath("/html/body/div[1]/div[2]/div/div[3]/div/form/p/button/span")).click();
+
+		  //Get Text
+		  String ConfirmationText=driver.findElement(By.xpath("//div[@id='center_column']/p[@class='alert alert-success']")).getText();
+		  
+		  // Verifica si el producto esta ordenado
+		  if(ConfirmationText.contains("complete")) {
+		   System.out.println("Order Completed: Test Case Passed");
+		  }
+		  else {
+		   System.out.println("Order Not Successfull: Test Case Failed");
+		  }
+
+		 }
+  
 	}
-}
-	
