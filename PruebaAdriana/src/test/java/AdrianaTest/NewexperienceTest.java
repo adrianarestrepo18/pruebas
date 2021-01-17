@@ -26,6 +26,10 @@ public class NewexperienceTest {
 	By registerBtnLocator = By.name("SubmitCreate");
 	By EmailaddresLocator = By.id("email_create");
 	By homePageLocator = By.className("page-heading");
+	By homePageSearch = By.className("search_query");
+	By registerBtnSearch = By.name("submit_search");
+	
+
 	
 	By passwdLocator = By.id("passwd");
 	
@@ -50,7 +54,7 @@ public class NewexperienceTest {
 		driver.findElement(registerLinkLocator).click();
 		Thread.sleep(1000);
 		if(driver.findElement(registerLinkLocator).isDisplayed()) {
-			driver.findElement(EmailaddresLocator).sendKeys("prueba999@hotmail.com");
+			driver.findElement(EmailaddresLocator).sendKeys("comprasdprueba@hotmail.com");
 			driver.findElement(registerBtnLocator).click();
 			assertTrue(driver.findElement(homePageLocator).isDisplayed());
 
@@ -162,10 +166,10 @@ public class NewexperienceTest {
 		  //Seleccionar la talla M
 		  WebElement Sizedrpdwn=driver.findElement(By.xpath("//*[@id='group_1']"));
 		  Select oSelect=new Select(Sizedrpdwn);
-		  oSelect.selectByVisibleText("M");
+		  oSelect.selectByVisibleText("L");
 
 		  //Seleccionar el Color
-		  driver.findElement(By.id("color_11")).click();
+		  driver.findElement(By.id("color_8")).click();
 
 		  //Click agregar al carrito
 		  driver.findElement(By.xpath("//p[@id='add_to_cart']//span[.='Add to cart']")).click();
@@ -189,6 +193,18 @@ public class NewexperienceTest {
 
 		  //Get Text
 		  String ConfirmationText=driver.findElement(By.xpath("//div[@id='center_column']/p[@class='alert alert-success']")).getText();
+		  
+   	      driver.findElement(By.linkText("Back to orders")).click();
+   	      driver.findElement(By.linkText("Home")).click();
+   	      driver.findElement(By.linkText("Sign out")).click();
+   	      
+   	      driver.findElement(homePageSearch).sendKeys("women");
+   	      driver.findElement(registerBtnSearch).click();
+   	   
+   	   
+
+		    
+		  
 		  
 		  // Verifica si el producto esta ordenado
 		  if(ConfirmationText.contains("complete")) {
